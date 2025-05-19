@@ -15,7 +15,12 @@ function addBookToLibrary(book) {
 }
 
 function displayLibrary() {
-  const cards = document.querySelector(".cards");
+  const cards_container = document.querySelector(".cards");
+
+  while(cards_container.firstChild) {
+    cards_container.removeChild(cards_container.firstChild);
+  }
+
   my_library.forEach((book) => {
     const card = document.createElement("div");
     card.className = "card";
@@ -46,7 +51,7 @@ function displayLibrary() {
     card.appendChild(is_readed);
     card.appendChild(id);
 
-    cards.appendChild(card);
+    cards_container.appendChild(card);
   });
 }
 
@@ -74,6 +79,7 @@ function addBookDialogListener() {
     const is_readed = form.querySelector("#is-readed").value;
     const book = new Book(title, author, pages, is_readed);
     addBookToLibrary(book);
+    displayLibrary();
     dialog.close();
     form.reset();
   });
