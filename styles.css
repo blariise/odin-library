@@ -8,6 +8,79 @@ body {
   background-color: #252236;
 }
 
+.library {
+  display: flex;
+  justify-content: center;
+
+  color: #FFFFFF;
+  padding: 20px;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+}
+
+.open-add-book-dialog,
+.dialog-submit {
+  padding: 10px;
+  border: 3px solid #000000;
+  border-radius: 15px;
+  color: #FFFFFF;
+  background-color: #4DA0FF;
+  font-weight: bold;
+}
+
+.buttons button:hover {
+  background-color: #85BEFF;
+}
+
+dialog {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+}
+
+.dialog-add-book[open] {
+  display: grid;
+  grid-template-rows: fit-content(1rem) 1fr;
+}
+
+.dialog-add-book[open] .close-button {
+  justify-self: end;
+  background-color: #FFFFFF;
+  border: 0;
+}
+
+.close-button svg {
+  height: 100%;
+}
+
+.dialog-add-book[open] svg:hover {
+  fill: red;
+}
+
+.dialog-add-book[open] form {
+  padding: 20px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+.dialog-add-book[open] form > * {
+  display: grid;
+  grid-template-columns: 70px 1fr;
+}
+
+.dialog-add-book[open] .dialog-submit {
+  justify-self: center;
+}
+
 .cards {
   display: flex;
   padding: 50px;
@@ -20,5 +93,6 @@ body {
   justify-items: center;
 
   background-color: #FFFFFF;
+  border: 5px solid #000000;
   border-radius: 10px;
 }

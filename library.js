@@ -50,9 +50,34 @@ function displayLibrary() {
   });
 }
 
-const book1 = new Book("Harry Potter", "J. K. Rowling", 254, false);
+function addBookDialogListener() {
+  const show_dialog = document.querySelector(".open-add-book-dialog");
+  const dialog = document.querySelector(".dialog-add-book");
+  const close_dialog = document.querySelector(".close-button");
+  const submit_dialog = document.querySelector(".dialog-submit");
+  const form = document.querySelector(".dialog-form")
 
-addBookToLibrary(book1);
+  show_dialog.addEventListener("click", () => {
+    dialog.showModal();
+  });
 
-displayLibrary();
+  close_dialog.addEventListener("click", () => {
+    dialog.close();
+    form.reset();
+  });
 
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const title = form.querySelector("#title").value;
+    const author = form.querySelector("#author").value;
+    const pages = form.querySelector("#pages").value;
+    const is_readed = form.querySelector("#is-readed").value;
+    const book = new Book(title, author, pages, is_readed);
+    addBookToLibrary(book);
+    dialog.close();
+    form.reset();
+  });
+  
+}
+
+addBookDialogListener();
