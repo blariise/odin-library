@@ -10,6 +10,14 @@ function Book(title, author, pages, is_readed) {
   this.id = crypto.randomUUID();
 }
 
+Book.prototype.toggleRead = function() {
+  if (this.is_readed) {
+    this.is_readed = false;
+  } else {
+    this.is_readed = true;
+  }
+}
+
 function addBookToLibrary(book) {
   my_library.push(book);
 }
@@ -38,8 +46,12 @@ function displayLibrary() {
     pages.textContent = book.pages;
 
     const is_readed = document.createElement("div");
-    is_readed.className = book.is_readed;
+    is_readed.className = "is_readed";
     is_readed.textContent = book.is_readed ? "Completed" : "Not completed";
+    const toggle_is_readed = document.createElement("button");
+    toggle_is_readed.className = "toggle_is_readed";
+    toggle_is_readed.textContent = "Toggle";
+    is_readed.appendChild(toggle_is_readed);
 
     card.dataset.id = book.id;
 
@@ -101,29 +113,37 @@ function addBookDialogListener() {
     dialog.close();
     form.reset();
   });
-  
 }
 
-function addRemoveBookButtonListener() {
+function addBookCardButtonsListener() {
   const cards = document.querySelector(".cards");
   cards.addEventListener("click", (e) => {
     let target = e.target.closest("button");
     let book_id = e.target.closest("div").dataset.id;
     if (target !== null) {
-      const card_id = target.closest("div").dataset.id;
-      for (let i = 0; i < my_library.length; ++i) {
-        if (my_library[i].id === card_id) {
-          my_library.splice(i, 1);
-          displayLibrary();
+      const card_id = target.closest(".card").dataset.id;
+      if (target.className === "remove_button") {
+        for (let i = 0; i < my_library.length; ++i) {
+          if (my_library[i].id === card_id) {
+            my_library.splice(i, 1);
+            displayLibrary();
+          }
+        }
+      }
+      if (target.className === "toggle_is_readed") {
+        for (const book of my_library) {
+          if (book.id === card_id) {
+            book.toggleRead();
+            displayLibrary();
+            const card = document.querySelector(`.card[data-id="${card_id}"]`);
+            const is_readed = card.querySelector(".is_readed");
+          }
         }
       }
     }
   });
 }
 
-const temp = new Book("Harry Potter", "J.K. Rolling", 1337, true);
-addBookToLibrary(temp);
-displayLibrary();
-
 addBookDialogListener();
-addRemoveBookButtonListener();
+addBookCardButtonsListener();
+
